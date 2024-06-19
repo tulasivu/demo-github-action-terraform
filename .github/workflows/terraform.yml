@@ -10,6 +10,14 @@ on:
         - apply
         - destroy
         required: true
+      instance_type:
+        type: choice
+        description: select instance type
+        options: 
+        - t2.micro
+        - t2.small
+        - t2.medium
+        required: true
 
   push:
     branches: [ "main" ]
@@ -37,7 +45,7 @@ jobs:
         tf_actions_subcommand: 'init'
         tf_actions_working_dir: '.'
         tf_actions_comment: true
-        args: '-var="instance_type=t2.micro"'
+        args: '-var="instance_type=${{github.event.inputs.instance_type}}"'
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
@@ -47,7 +55,7 @@ jobs:
         tf_actions_subcommand: 'plan'
         tf_actions_working_dir: '.'
         tf_actions_comment: true
-        args: '-var="instance_type=t2.micro"'
+        args: '-var="instance_type=${{github.event.inputs.instance_type}}"'
 
     # Generates an apply for Terraform
     - name: Terraform apply
@@ -58,7 +66,7 @@ jobs:
         tf_actions_subcommand: ${{github.event.inputs.terraform_action}}
         tf_actions_working_dir: '.'
         tf_actions_comment: true
-        args: '-auto-approve -var="instance_type=t2.micro"'
+        args: '-auto-approve -var="instance_type=${{github.event.inputs.instance_type}}"'
 
     # Generates  destroy Terraform
     - name: Terraform destroy
@@ -69,4 +77,4 @@ jobs:
         tf_actions_subcommand: ${{github.event.inputs.terraform_action}}
         tf_actions_working_dir: '.'
         tf_actions_comment: true
-        args: '-auto-approve -var="instance_type=t2.micro"'  
+        args: '-auto-approve -var="instance_type=${{github.event.inputs.instance_type}}"'  
