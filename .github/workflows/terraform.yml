@@ -1,15 +1,15 @@
 name: 'Terraform'
 
 on:
-workflow_dispatch:
-  input:
-    terraform_action:
-      type: choice
-      description: select terraform action
-      option: 
-      - apply
-      - destroy
-      required: true
+  workflow_dispatch:
+    input:
+      terraform_action:
+        type: choice
+        description: select terraform action
+        option: 
+        - apply
+        - destroy
+        required: true
 
   push:
     branches: [ "main" ]
